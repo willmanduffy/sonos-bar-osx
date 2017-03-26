@@ -217,7 +217,7 @@ class DevicePopupViewController: NSViewController {
             (playing, response, error)
             in
             if (error != nil) {
-                print(error)
+                print(error ?? "There was an error")
                 // Check that device is still active
                 self.appDelegate.sonosManager?.refreshDevices()
             } else {
@@ -248,7 +248,7 @@ class DevicePopupViewController: NSViewController {
             (artist, title, album, albumArt, time, duration, queueIndex, trackURI, trackProtocol, error) -> Void
             in
             if (error != nil) {
-                print(error)
+                print(error ?? "There was an error")
             } else {
                 let trackArtist = artist ?? "Unknown Artist"
                 let trackTitle = title ?? "Unknown Track"
@@ -269,7 +269,7 @@ class DevicePopupViewController: NSViewController {
             (volume, response, error) -> Void
             in
             if (error != nil) {
-                print(error)
+                print(error ?? "There was an error")
             } else {
                 self.volumeSlider.integerValue = volume as Int
             }
@@ -286,9 +286,9 @@ class DevicePopupViewController: NSViewController {
             (response, error)
             in
             if (error != nil) {
-                print(error)
+                print(error ?? "There was an error")
             } else {
-                print(response)
+                print(response ?? "Response received")
             }
         })
         
@@ -305,7 +305,7 @@ class DevicePopupViewController: NSViewController {
             (playing, response, error)
             in
             if (error != nil) {
-                print(error)
+                print(error ?? "There was an error")
             } else {
                 // Playback status was retrieved
                 if (playing) {
@@ -313,9 +313,9 @@ class DevicePopupViewController: NSViewController {
                         (response, error) -> Void
                         in
                         if (error != nil) {
-                            print(error)
+                            print(error ?? "There was an error")
                         } else {
-                            print(response)
+                            print(response ?? "Response received")
                             // Set the correct title and icon
                             self.playbackButton.image = NSImage(named: "play-button")
                             self.displayTrackInfo()
@@ -326,9 +326,9 @@ class DevicePopupViewController: NSViewController {
                         (response, error) -> Void
                         in
                         if (error != nil) {
-                            print(error)
+                            print(error ?? "There was an error")
                         } else {
-                            print(response)
+                            print(response ?? "Response received")
                             // Set the correct title and icon
                             self.playbackButton.image = NSImage(named: "pause-button")
                             self.displayTrackInfo()
@@ -348,10 +348,10 @@ class DevicePopupViewController: NSViewController {
             (response, error) -> Void
             in
             if (error != nil) {
-                print(error)
+                print(error ?? "There was an error")
             } else {
                 self.displayTrackInfo()
-                print(response)
+                print(response ?? "Response received")
             }
         })
     }
@@ -365,11 +365,11 @@ class DevicePopupViewController: NSViewController {
             (response, error) -> Void
             in
             if (error != nil) {
-                print(error)
+                print(error ?? "There was an error")
             } else {
                 self.displayTrackInfo()
             }
-            print(response)
+            print(response ?? "Response received")
         })
     }
     
