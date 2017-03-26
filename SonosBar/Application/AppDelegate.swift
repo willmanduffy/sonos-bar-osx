@@ -9,17 +9,17 @@
 import Cocoa
 
 @NSApplicationMain
-public class AppDelegate: NSObject, NSApplicationDelegate {
+open class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: Global Variables
     
-    var statusBar = NSStatusBar.systemStatusBar()
+    var statusBar = NSStatusBar.system()
     var statusBarItem: NSStatusItem? = nil
     var popover: NSPopover = NSPopover()
     var popoverTransiencyMonitor: AnyObject? = nil
     // Context for Key-Value Observer
-    private var allDevicesContext: UInt8 = 1
-    private var currentDeviceContext: UInt8 = 2
+    fileprivate var allDevicesContext: UInt8 = 1
+    fileprivate var currentDeviceContext: UInt8 = 2
     
     var sonosManager: SonosManager? = nil
     var sonosDevices: [SonosController] = []
@@ -28,12 +28,12 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Interface Functions
     
-    public func applicationWillFinishLaunching(aNotification: NSNotification)
+    open func applicationWillFinishLaunching(_ aNotification: Notification)
     {
         // Find the available Sonos devices
         sonosManager = SonosManager.sharedInstance() as? SonosManager
-        sonosManager!.addObserver(self, forKeyPath: "allDevices", options: NSKeyValueObservingOptions.New, context: &allDevicesContext)
-        sonosManager!.addObserver(self, forKeyPath: "currentDevice", options: NSKeyValueObservingOptions.New, context: &currentDeviceContext)
+        sonosManager!.addObserver(self, forKeyPath: "allDevices", options: NSKeyValueObservingOptions.new, context: &allDevicesContext)
+        sonosManager!.addObserver(self, forKeyPath: "currentDevice", options: NSKeyValueObservingOptions.new, context: &currentDeviceContext)
     }
 
     // MARK: Setup Functions
@@ -41,11 +41,11 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     /**
     Key-Value Observer for allDevices key
     */
-    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)
     {
         if (context == &allDevicesContext)
         {
-            sonosCoordinators.removeAll(keepCapacity: false)
+            sonosCoordinators.removeAll(keepingCapacity: false)
             sonosCoordinators = sonosManager?.coordinators as! [SonosController]
             if (sonosCoordinators.isEmpty)
             {
@@ -82,18 +82,18 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     /**
     Setup menubar status item
     */
-    public func menuBarSetup()
+    open func menuBarSetup()
     {
         // Add statusBarItem to status bar
         if (statusBarItem == nil) {
-            statusBarItem = statusBar.statusItemWithLength(-1)
+            statusBarItem = statusBar.statusItem(withLength: -1)
             statusBarItem!.image = NSImage(named: "sonos-icon-round")
             if let statusButton = statusBarItem!.button {
-                statusButton.action = "handlePopover:"
+                statusButton.action = #selector(AppDelegate.handlePopover(_:))
             }
             // Create popup for info and controls
             popover = NSPopover()
-            popover.behavior = NSPopoverBehavior.Transient
+            popover.behavior = NSPopoverBehavior.transient
         }
         // Set view controller depending on if a device is found
         if (self.currentDevice == nil) {
@@ -110,10 +110,10 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     /**
     Handle opening/closing of popover on button press
     */
-    func handlePopover(sender: AnyObject)
+    func handlePopover(_ sender: AnyObject)
     {
         if let _ = statusBarItem!.button {
-            if popover.shown {
+            if popover.isShown {
                 popover.close()
             } else {
                 self.openPopover(sender)
@@ -124,22 +124,22 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     /**
     Open popover and add transiency monitor
     */
-    func openPopover(sender: AnyObject)
+    func openPopover(_ sender: AnyObject)
     {
         if let statusButton = statusBarItem!.button {
-            popoverTransiencyMonitor = NSEvent.addGlobalMonitorForEventsMatchingMask([NSEventMask.LeftMouseDownMask, NSEventMask.RightMouseDownMask],
+            popoverTransiencyMonitor = NSEvent.addGlobalMonitorForEvents(matching: [NSEventMask.leftMouseDown, NSEventMask.rightMouseDown],
                 handler: {(event) -> Void
                     in
                     self.closePopover(sender)
-            })
-            popover.showRelativeToRect(NSZeroRect, ofView: statusButton, preferredEdge: NSRectEdge.MinY)
+            }) as AnyObject?
+            popover.show(relativeTo: NSZeroRect, of: statusButton, preferredEdge: NSRectEdge.minY)
         }
     }
     
     /**
     Closing of popover and remove transiency monitor
     */
-    func closePopover(sender: AnyObject)
+    func closePopover(_ sender: AnyObject)
     {
         if (popoverTransiencyMonitor != nil) {
             NSEvent.removeMonitor(popoverTransiencyMonitor!)

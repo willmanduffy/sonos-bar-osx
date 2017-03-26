@@ -259,9 +259,11 @@
 				TargetAttributes = {
 					23350EA01AA2C6C200485199 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0820;
 					};
 					23350EB21AA2C6C200485199 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 23350EA01AA2C6C200485199;
 					};
 				};
@@ -479,6 +481,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hierarchy.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SonosBar;
 				SWIFT_OBJC_BRIDGING_HEADER = "SonosBar/Application/SonosBar-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -493,6 +496,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hierarchy.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SonosBar;
 				SWIFT_OBJC_BRIDGING_HEADER = "SonosBar/Application/SonosBar-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -515,6 +519,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hierarchy.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SonosBarTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "SonosBar/Application/SonosBar-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SonosBar.app/Contents/MacOS/SonosBar";
 			};
 			name = Debug;
@@ -534,6 +539,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Hierarchy.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SonosBarTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "SonosBar/Application/SonosBar-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SonosBar.app/Contents/MacOS/SonosBar";
 			};
 			name = Release;

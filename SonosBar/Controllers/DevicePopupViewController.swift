@@ -34,21 +34,21 @@ class DevicePopupViewController: NSViewController {
         view = NSView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraint(NSLayoutConstraint(
-            item: view, attribute: .Width, relatedBy: .Equal,
-            toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 280))
+            item: view, attribute: .width, relatedBy: .equal,
+            toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 280))
         view.addConstraint(NSLayoutConstraint(
-            item: view, attribute: .Height, relatedBy: .Equal,
-            toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 140))
+            item: view, attribute: .height, relatedBy: .equal,
+            toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 140))
         
         // Create the playback control buttons
         let playbackButton = NSButton()
         self.playbackButton = playbackButton
         playbackButton.title = "Play/Pause"
         playbackButton.target = self
-        playbackButton.action = "playbackTogglePressed:"
+        playbackButton.action = #selector(DevicePopupViewController.playbackTogglePressed(_:))
         playbackButton.image = NSImage(named: "play-button")
-        playbackButton.imagePosition = NSCellImagePosition.ImageOnly
-        playbackButton.bordered = false
+        playbackButton.imagePosition = NSCellImagePosition.imageOnly
+        playbackButton.isBordered = false
         playbackButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(playbackButton)
         
@@ -56,10 +56,10 @@ class DevicePopupViewController: NSViewController {
         self.nextButton = nextButton
         nextButton.title = "Next"
         nextButton.target = self
-        nextButton.action = "nextPressed:"
+        nextButton.action = #selector(DevicePopupViewController.nextPressed(_:))
         nextButton.image = NSImage(named: "next-button")
-        nextButton.imagePosition = NSCellImagePosition.ImageOnly
-        nextButton.bordered = false
+        nextButton.imagePosition = NSCellImagePosition.imageOnly
+        nextButton.isBordered = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nextButton)
         
@@ -67,20 +67,20 @@ class DevicePopupViewController: NSViewController {
         self.prevButton = prevButton
         prevButton.title = "Prev"
         prevButton.target = self
-        prevButton.action = "prevPressed:"
+        prevButton.action = #selector(DevicePopupViewController.prevPressed(_:))
         prevButton.image = NSImage(named: "prev-button")
-        prevButton.imagePosition = NSCellImagePosition.ImageOnly
-        prevButton.bordered = false
+        prevButton.imagePosition = NSCellImagePosition.imageOnly
+        prevButton.isBordered = false
         prevButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(prevButton)
         
         let quitButton = NSButton()
         quitButton.title = "Quit"
         quitButton.target = self
-        quitButton.action = "quitPressed:"
+        quitButton.action = #selector(DevicePopupViewController.quitPressed(_:))
         quitButton.image = NSImage(named: "quit-button")
-        quitButton.imagePosition = NSCellImagePosition.ImageOnly
-        quitButton.bordered = false
+        quitButton.imagePosition = NSCellImagePosition.imageOnly
+        quitButton.isBordered = false
         quitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(quitButton)
         
@@ -88,10 +88,10 @@ class DevicePopupViewController: NSViewController {
         let sonosAppButton = NSButton()
         sonosAppButton.title = "Sonos App"
         sonosAppButton.target = self
-        sonosAppButton.action = "sonosAppPressed:"
+        sonosAppButton.action = #selector(DevicePopupViewController.sonosAppPressed(_:))
         sonosAppButton.image = NSImage(named: "sonos-app-button")
-        sonosAppButton.imagePosition = NSCellImagePosition.ImageOnly
-        sonosAppButton.bordered = false
+        sonosAppButton.imagePosition = NSCellImagePosition.imageOnly
+        sonosAppButton.isBordered = false
         sonosAppButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(sonosAppButton)
         
@@ -100,10 +100,10 @@ class DevicePopupViewController: NSViewController {
         self.currentDeviceLabel = currentDeviceLabel
         currentDeviceLabel.stringValue = "Current Device"
         currentDeviceLabel.alignment = NSLeftTextAlignment
-        currentDeviceLabel.editable = false
-        currentDeviceLabel.selectable = false
+        currentDeviceLabel.isEditable = false
+        currentDeviceLabel.isSelectable = false
         currentDeviceLabel.drawsBackground = false
-        currentDeviceLabel.bezeled = false
+        currentDeviceLabel.isBezeled = false
         currentDeviceLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(currentDeviceLabel)
         
@@ -112,10 +112,10 @@ class DevicePopupViewController: NSViewController {
         self.trackInfoLabel = trackInfoLabel
         trackInfoLabel.stringValue = "Track Info"
         trackInfoLabel.alignment = NSCenterTextAlignment
-        trackInfoLabel.editable = false
-        trackInfoLabel.selectable = false
+        trackInfoLabel.isEditable = false
+        trackInfoLabel.isSelectable = false
         trackInfoLabel.drawsBackground = false
-        trackInfoLabel.bezeled = false
+        trackInfoLabel.isBezeled = false
         trackInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(trackInfoLabel)
         
@@ -123,76 +123,76 @@ class DevicePopupViewController: NSViewController {
         let volumeSlider = NSSlider()
         self.volumeSlider = volumeSlider
         volumeSlider.target = self
-        volumeSlider.action = "volumeChanged:"
+        volumeSlider.action = #selector(DevicePopupViewController.volumeChanged(_:))
         volumeSlider.maxValue = 100.0
         volumeSlider.minValue = 0.0
-        volumeSlider.continuous = true
+        volumeSlider.isContinuous = true
         volumeSlider.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(volumeSlider)
         
         
         // Add constraints to the view
         // Horizontal
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-(30)-[prevButton(playbackButton)]-[playbackButton]-[nextButton(playbackButton)]-(30)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-(30)-[prevButton(playbackButton)]-[playbackButton]-[nextButton(playbackButton)]-(30)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["playbackButton":playbackButton, "prevButton":prevButton, "nextButton":nextButton]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-(20)-[trackInfoLabel]-(20)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-(20)-[trackInfoLabel]-(20)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["trackInfoLabel":trackInfoLabel]))
         
         //Vertical
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-(15)-[trackInfoLabel(20)]-[playbackButton]-[volumeSlider(20)]-(25)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-(15)-[trackInfoLabel(20)]-[playbackButton]-[volumeSlider(20)]-(25)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["playbackButton":playbackButton, "trackInfoLabel":trackInfoLabel, "volumeSlider":volumeSlider]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-(15)-[trackInfoLabel(20)]-[prevButton]-[volumeSlider(20)]-(25)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-(15)-[trackInfoLabel(20)]-[prevButton]-[volumeSlider(20)]-(25)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["prevButton":prevButton, "trackInfoLabel":trackInfoLabel, "volumeSlider":volumeSlider]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-(15)-[trackInfoLabel(20)]-[nextButton]-[volumeSlider(20)]-(25)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-(15)-[trackInfoLabel(20)]-[nextButton]-[volumeSlider(20)]-(25)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["nextButton":nextButton, "trackInfoLabel":trackInfoLabel, "volumeSlider":volumeSlider]))
         
         // Quit button constraints
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:[quitButton(15.0)]-(5)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[quitButton(15.0)]-(5)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["quitButton":quitButton]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-(5)-[quitButton(15.0)]",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-(5)-[quitButton(15.0)]",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["quitButton":quitButton]))
         
         // Sonos app button constraints
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-(25)-[volumeSlider]-[sonosAppButton(20.0)]-(5)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-(25)-[volumeSlider]-[sonosAppButton(20.0)]-(5)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["sonosAppButton":sonosAppButton, "volumeSlider":volumeSlider]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:[sonosAppButton(20.0)]-(5)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[sonosAppButton(20.0)]-(5)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["sonosAppButton":sonosAppButton]))
         
         // Current device label constraints
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-(25)-[currentDeviceLabel]-[sonosAppButton(20.0)]-(5)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-(25)-[currentDeviceLabel]-[sonosAppButton(20.0)]-(5)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["currentDeviceLabel":currentDeviceLabel, "sonosAppButton":sonosAppButton]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:[currentDeviceLabel(17.5)]-(5)-|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[currentDeviceLabel(17.5)]-(5)-|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: ["currentDeviceLabel":currentDeviceLabel]))
@@ -202,7 +202,7 @@ class DevicePopupViewController: NSViewController {
         super.viewDidLoad()
         
         // Get current device from appDelegate
-        appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate = NSApplication.shared().delegate as! AppDelegate
         currentDevice = appDelegate.currentDevice
         sonosCoordinators = appDelegate.sonosCoordinators
     }
@@ -250,7 +250,10 @@ class DevicePopupViewController: NSViewController {
             if (error != nil) {
                 print(error)
             } else {
-                self.trackInfoLabel.stringValue = "\(title) - \(artist)"
+                let trackArtist = artist ?? "Unknown Artist"
+                let trackTitle = title ?? "Unknown Track"
+                
+                self.trackInfoLabel.stringValue = "\(trackArtist) - \(trackTitle)"
             }
         })
     }
@@ -276,7 +279,7 @@ class DevicePopupViewController: NSViewController {
     /**
     Update Sonos volume according to volume slider
     */
-    func volumeChanged(sender: AnyObject)
+    func volumeChanged(_ sender: AnyObject)
     {
         let sliderVolumeValue = self.volumeSlider.integerValue
         currentDevice!.setVolume(sliderVolumeValue, completion: {
@@ -296,7 +299,7 @@ class DevicePopupViewController: NSViewController {
     /**
     Handle pressing of toggle playback in status bar menu
     */
-    func playbackTogglePressed(sender: AnyObject)
+    func playbackTogglePressed(_ sender: AnyObject)
     {
         currentDevice!.playbackStatus({
             (playing, response, error)
@@ -339,7 +342,7 @@ class DevicePopupViewController: NSViewController {
     /**
     Handle pressing of next option in status bar menu
     */
-    func nextPressed(sender: AnyObject)
+    func nextPressed(_ sender: AnyObject)
     {
         currentDevice!.next({
             (response, error) -> Void
@@ -356,7 +359,7 @@ class DevicePopupViewController: NSViewController {
     /**
     Handle pressing of previous option in status bar menu
     */
-    func prevPressed(sender: AnyObject)
+    func prevPressed(_ sender: AnyObject)
     {
         currentDevice!.previous({
             (response, error) -> Void
@@ -373,20 +376,20 @@ class DevicePopupViewController: NSViewController {
     /**
     Handle pressing of sonos app button
     */
-    func sonosAppPressed(sender: AnyObject)
+    func sonosAppPressed(_ sender: AnyObject)
     {
         // Launch Sonos Controller app
-        NSWorkspace.sharedWorkspace().launchAppWithBundleIdentifier("com.sonos.macController",
-            options: NSWorkspaceLaunchOptions.Default, additionalEventParamDescriptor: nil, launchIdentifier: nil)
+        NSWorkspace.shared().launchApplication(withBundleIdentifier: "com.sonos.macController",
+            options: NSWorkspaceLaunchOptions.default, additionalEventParamDescriptor: nil, launchIdentifier: nil)
     }
     
     /**
     Handle pressing of quit option in status bar menu
     */
-    func quitPressed(sender: AnyObject)
+    func quitPressed(_ sender: AnyObject)
     {
         print("Application Shutting Down...")
-        NSApplication.sharedApplication().terminate(self)
+        NSApplication.shared().terminate(self)
     }
 
     
